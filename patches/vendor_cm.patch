@@ -1,13 +1,19 @@
-From bca1600df530aa51a5286ba4a866035c8095eb1c Mon Sep 17 00:00:00 2001
-From: ghsr <ghsr92@yandex.ru>
-Date: Thu, 28 Jan 2016 02:08:47 +0600
-Subject: [PATCH] config: Do not use UTC time for date
-
-Change-Id: I058f96f2a758aebfcde5c0fcb467ad712f226143
----
- config/common.mk | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
+diff --git a/config/common.mk b/config/common.mk
+index feae0ac..d771055 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -61,6 +61,11 @@ PRODUCT_COPY_FILES += \
+     vendor/cm/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
+ endif
+ 
++# SuperSU
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/UPDATE-SuperSU.zip:system/addon.d/UPDATE-SuperSU.zip \
++    vendor/cm/prebuilt/common/etc/init.d/99SuperSUDaemon:system/etc/init.d/99SuperSUDaemon
++
+ # CM-specific init file
+ PRODUCT_COPY_FILES += \
+     vendor/cm/prebuilt/common/etc/init.local.rc:root/init.cm.rc
 diff --git a/config/common.mk b/config/common.mk
 index 24460098..d22099fa 100644
 --- a/config/common.mk
@@ -33,6 +39,3 @@ index 24460098..d22099fa 100644
              endif
          else
              TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
--- 
-2.11.0
-
