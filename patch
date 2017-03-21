@@ -19,6 +19,7 @@ PATCHES=(
 'system/core			system_core.patch'
 'vendor/cm			vendor_cm.patch'
 'build				build.patch'
+'packages/apps/Settings 	packages_apps_Settings.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
