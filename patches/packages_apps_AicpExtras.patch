@@ -11,3 +11,22 @@ index b68a93b..66b7077 100644
                  Intent intent = new Intent(Intent.ACTION_VIEW);
                  intent.setData(Uri.parse(url));
                  startActivity(intent);
+diff --git a/res/xml/anonymous_stats.xml b/res/xml/anonymous_stats.xml
+index 90aa011..09cae2a 100644
+--- a/res/xml/anonymous_stats.xml
++++ b/res/xml/anonymous_stats.xml
+@@ -22,12 +22,12 @@
+         android:key="pref_settings"
+         android:title="@string/pref_settings" >
+         <CheckBoxPreference
+-            android:defaultValue="true"
++            android:defaultValue="false"
+             android:disableDependentsState="true"
+             android:key="pref_anonymous_opt_in"
+             android:title="@string/enable_reporting_title" />
+         <CheckBoxPreference
+-            android:defaultValue="false"
++            android:defaultValue="true"
+             android:dependency="pref_anonymous_opt_in"
+             android:key="pref_anonymous_opt_out_persist"
+             android:title="@string/disable_reporting_persistent" />
