@@ -1,0 +1,13 @@
+diff --git a/src/com/lordclockan/aicpextras/AboutFragment.java b/src/com/lordclockan/aicpextras/AboutFragment.java
+index b68a93b..66b7077 100644
+--- a/src/com/lordclockan/aicpextras/AboutFragment.java
++++ b/src/com/lordclockan/aicpextras/AboutFragment.java
+@@ -117,7 +117,7 @@ public class AboutFragment extends Fragment {
+                 startActivity(intent);
+             } else if (preference == mAicpDownloads) {
+                 String mDevice = Utils.getDevice(getContext());
+-                String url = "http://dwnld.aicp-rom.com/?device=" + mDevice;
++                String url = "https://drive.google.com/open?id=0B3As2UNIM9_HbTRwdW1ncjR4RUk";
+                 Intent intent = new Intent(Intent.ACTION_VIEW);
+                 intent.setData(Uri.parse(url));
+                 startActivity(intent);

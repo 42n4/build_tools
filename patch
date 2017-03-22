@@ -1,8 +1,5 @@
 #!/bin/bash
 
-cp -u ./bin/UPDATE-SuperSU.zip  ../vendor/cm/prebuilt/common
-cp -u ./bin/99SuperSUDaemon  ../vendor/cm/prebuilt/common/etc/init.d
-
 cd ..
 
 COUNT=0
@@ -14,11 +11,11 @@ PATCHES=(
 'frameworks/native		frameworks_native.patch'
 'frameworks/opt/telephony	frameworks_opt_telephony.patch'
 'hardware/broadcom/libbt	hardware_broadcom_libbt.patch'
+'packages/apps/AicpExtras	packages_apps_AicpExtras.patch'
 'packages/inputmethods/LatinIME packages_inputmethods_LatinIME.patch'
 'packages/services/Telephony	packages_services_Telephony.patch'
 'system/core			system_core.patch'
-'vendor/cm			vendor_cm.patch'
-'build				build.patch'
+'vendor/aicp			vendor_aicp.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]

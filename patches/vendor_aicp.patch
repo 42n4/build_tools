@@ -1,0 +1,66 @@
+diff --git a/configs/common.mk b/configs/common.mk
+index 949349a..8552801 100644
+--- a/configs/common.mk
++++ b/configs/common.mk
+@@ -145,7 +145,7 @@ PRODUCT_COPY_FILES += \
+ # -include vendor/cyngn/product.mk
+ 
+ # AICP OTA
+-ifneq ($(AICP_BUILDTYPE),UNOFFICIAL)
+-PRODUCT_PACKAGES +=  \
+-   AICP_OTA
+-endif
++#ifneq ($(AICP_BUILDTYPE),UNOFFICIAL)
++#PRODUCT_PACKAGES +=  \
++#   AICP_OTA
++#endif
+diff --git a/configs/common_versions.mk b/configs/common_versions.mk
+index f9a6397..5cc474e 100644
+--- a/configs/common_versions.mk
++++ b/configs/common_versions.mk
+@@ -21,20 +21,20 @@ endif
+ 
+ ifdef AICP_BUILDTYPE
+     ifeq ($(AICP_BUILDTYPE), RELEASE)
+-       AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-RELEASE-$(shell date -u +%Y%m%d)
++       AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-RELEASE-$(shell date +%Y%m%d)
+     endif
+     ifeq ($(AICP_BUILDTYPE), NIGHTLY)
+-        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-NIGHTLY-$(shell date -u +%Y%m%d)
++        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-NIGHTLY-$(shell date +%Y%m%d)
+     endif
+     ifeq ($(AICP_BUILDTYPE), EXPERIMENTAL)
+-        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-EXPERIMENTAL-$(shell date -u +%Y%m%d)
++        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-EXPERIMENTAL-$(shell date +%Y%m%d)
+     endif
+     ifeq ($(AICP_BUILDTYPE), UNOFFICIAL)
+-        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-UNOFFICIAL-$(shell date -u +%Y%m%d)
++        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-UNOFFICIAL-$(shell date +%Y%m%d)
+     endif
+ else
+ #We reset back to UNOFFICIAL
+-        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-UNOFFICIAL-$(shell date -u +%Y%m%d)
++        AICP_VERSION := $(TARGET_PRODUCT)_$(AICP_BRANCH)-$(VERSION)-UNOFFICIAL-$(shell date +%Y%m%d)
+ endif
+ 
+ 
+diff --git a/products/AndroidProducts.mk b/products/AndroidProducts.mk
+index af51d4c..8a8aa30 100644
+--- a/products/AndroidProducts.mk
++++ b/products/AndroidProducts.mk
+@@ -41,6 +41,7 @@ PRODUCT_MAKEFILES := \
+     $(LOCAL_DIR)/honami.mk \
+     $(LOCAL_DIR)/huashan.mk \
+     $(LOCAL_DIR)/hydrogen.mk \
++    $(LOCAL_DIR)/i9152.mk \
+     $(LOCAL_DIR)/i9300.mk \
+     $(LOCAL_DIR)/i9305.mk \
+     $(LOCAL_DIR)/jewel.mk \
+diff --git a/products/i9152.mk b/products/i9152.mk
+new file mode 100644
+index 0000000..03e393e 100644
+--- /dev/null
++++ b/products/i9152.mk
+@@ -0,0 +1,2 @@
++# Inherit device configuration
++$(call inherit-product, device/samsung/i9152/aicp_9152.mk)
