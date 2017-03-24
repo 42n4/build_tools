@@ -1,8 +1,8 @@
 diff --git a/config/common.mk b/config/common.mk
-index feae0ac..d771055 100644
+index 7264f73..4c89222 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -61,6 +61,11 @@ PRODUCT_COPY_FILES += \
+@@ -121,6 +121,11 @@ PRODUCT_COPY_FILES += \
      vendor/cm/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
  endif
  
@@ -14,28 +14,38 @@ index feae0ac..d771055 100644
  # CM-specific init file
  PRODUCT_COPY_FILES += \
      vendor/cm/prebuilt/common/etc/init.local.rc:root/init.cm.rc
-diff --git a/config/common.mk b/config/common.mk
-index 24460098..d22099fa 100644
---- a/config/common.mk
-+++ b/config/common.mk
-@@ -309,9 +309,9 @@ ifeq ($(CM_BUILDTYPE), RELEASE)
-     endif
+@@ -175,9 +180,6 @@ PRODUCT_PACKAGES += \
+ 
+ # Custom CM packages
+ PRODUCT_PACKAGES += \
+-    ResurrectionOTA \
+-    ResurrectionStats \
+-    Trebuchet \
+     MusicFX \
+     CMFileManager \
+     Eleven \
+@@ -291,9 +293,9 @@ DEVICE_PACKAGE_OVERLAYS += vendor/cm/overlay/common
+ 
+ PRODUCT_VERSION = 5.8.2
+ ifneq ($(RR_BUILDTYPE),)
+-RR_VERSION := RR-N-v$(PRODUCT_VERSION)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-$(RR_BUILDTYPE)
++RR_VERSION := RR-N-v$(PRODUCT_VERSION)-$(shell date +%Y%m%d)-$(CM_BUILD)-$(RR_BUILDTYPE)
  else
-     ifeq ($(CM_VERSION_MAINTENANCE),0)
--        LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
-+        LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
-     else
--        LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(CM_VERSION_MAINTENANCE)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
-+        LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(CM_VERSION_MAINTENANCE)-$(shell date +%Y%m%d)-$(CM_BUILDTYPE)$(CM_EXTRAVERSION)-$(CM_BUILD)
-     endif
+-RR_VERSION := RR-N-v$(PRODUCT_VERSION)-$(shell date -u +%Y%m%d)-$(CM_BUILD)
++RR_VERSION := RR-N-v$(PRODUCT_VERSION)-$(shell date +%Y%m%d)-$(CM_BUILD)
  endif
  
-@@ -337,7 +337,7 @@ ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
-                 CM_EXTRAVERSION := $(shell echo $(CM_EXTRAVERSION) | sed 's/-//')
-                 TARGET_VENDOR_RELEASE_BUILD_ID := $(CM_EXTRAVERSION)
-             else
--                TARGET_VENDOR_RELEASE_BUILD_ID := $(shell date -u +%Y%m%d)
-+                TARGET_VENDOR_RELEASE_BUILD_ID := $(shell date +%Y%m%d)
-             endif
-         else
-             TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
+ PRODUCT_PROPERTY_OVERRIDES += \
+@@ -301,11 +303,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
+  ro.modversion=$(RR_VERSION) \
+  rr.build.type=$(RR_BUILDTYPE) \
+  Default \
+- rr.ota.version= $(shell date -u +%Y%m%d) \
+- ro.romstats.url=http://resurrectionremix.sourceforge.net/ \
+- ro.romstats.name=ResurrectionRemix \
+- ro.romstats.version=$(PRODUCT_VERSION) \
+- ro.romstats.tframe=7
++ rr.ota.version= $(shell date +%Y%m%d) \
+ 
+ CM_DISPLAY_VERSION := $(RR_VERSION)
+ 
