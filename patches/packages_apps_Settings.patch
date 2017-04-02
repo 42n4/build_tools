@@ -1,0 +1,157 @@
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index c04b5b3..965a2ae 100755
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -147,25 +147,22 @@
+             </intent-filter>
+         </activity>
+ 
+-        <activity android:name="Settings$MagiskActivity"
+-            android:label="@string/magisk_title"
+-            android:icon="@drawable/ic_settings_magisk"
+-            android:taskAffinity="">
+-            <intent-filter>
++        <activity android:name="Settings$SuperSUActivity"
++               android:label="@string/supersu_title"
++               android:icon="@drawable/ic_settings_supersu"
++               android:taskAffinity="" >
++           <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.DEFAULT" />
+-                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                 <category android:name="com.android.settings.SHORTCUT" />
+             </intent-filter>
+-            <intent-filter android:priority="1">
+-                <action android:name="com.android.settings.action.SETTINGS" />
+-            </intent-filter>
+-            <meta-data android:name="com.android.settings.category"
+-                android:value="com.android.settings.category.rr" />
+-            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+-                android:value="com.android.settings.MagiskManager" />
+-            <meta-data android:name="com.android.settings.summary"
+-                android:resource="@string/magisk_summary" />
++            <intent-filter android:priority="0">
++                 <action android:name="com.android.settings.action.SETTINGS" />
++             </intent-filter>
++             <meta-data android:name="com.android.settings.category"
++                android:value="com.android.settings.category.system" />
++             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
++                android:value="com.android.settings.SuperSU" />
+         </activity>
+ 
+         <activity android:name="Settings$ThemesActivity"
+diff --git a/res/drawable/ic_settings_supersu.xml b/res/drawable/ic_settings_supersu.xml
+new file mode 100644
+index 0000000..7716f9e
+--- /dev/null
++++ b/res/drawable/ic_settings_supersu.xml
+@@ -0,0 +1,32 @@
++<!--
++    Copyright (C) 2016 Dirty Unicorns
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24.0dp"
++    android:height="24.0dp"
++    android:viewportWidth="24.0"
++    android:viewportHeight="24.0"
++    android:tint="?android:attr/colorAccent">
++    <path
++        android:fillColor="#FFFFFFFF"
++        android:pathData="M 4.604552,2.726887 0,7.331435 l 7.647226,9.209104 0.44808,-2.193457 -1.749645,0
++0,-1.544808 2.061167,0 0.763869,-3.759602 -2.825036,0 0,-1.544808 3.136558,0
++0.900427,-4.442389 1.553343,0 -0.900427,4.442389 3.26458,0 0.900427,-4.442389
++1.561878,0 -0.900427,4.442389 1.792319,0 0,1.544808 -2.103841,0
++-0.776672,3.759602 2.880513,0 0,1.544808 -3.187767,0 -0.904694,4.412518
++-1.553343,0 0.891892,-4.412518 -3.251778,0 -0.755335,3.69559 2.684211,3.230441 L
++24,7.331435 19.613087,2.752487 4.604552,2.726887 z m 6.119488,6.315785
++-0.763869,3.759602 3.251778,0 0.776671,-3.759602 -3.26458,0 z" />
++</vector>
+diff --git a/res/values/rr_strings.xml b/res/values/rr_strings.xml
+index b8956fb..ee207d9 100644
+--- a/res/values/rr_strings.xml
++++ b/res/values/rr_strings.xml
+@@ -2355,8 +2355,8 @@
+    <string name="force_authorize_substratum_packages_title">Allow theme apps from unknown sources</string>
+    <string name="force_authorize_substratum_packages_summary">Force authorize every theme app</string>
+ 
+-    <string name="magisk_title">Magisk manager</string>
+-    <string name="magisk_summary">Root management</string>
++    <!-- SuperSU header name - the app hides itself from launcher based on this resource name being present in com.android.settings -->
++    <string name="supersu_title">SuperSU</string>
+ 
+     <string name="notif_text_color">Text color</string>
+     <string name="status_bar_expanded_empty_shade_view_settings_title">No notifications view</string>
+diff --git a/src/com/android/settings/Settings.java b/src/com/android/settings/Settings.java
+index 13d460b..85f60ed 100644
+--- a/src/com/android/settings/Settings.java
++++ b/src/com/android/settings/Settings.java
+@@ -170,7 +170,7 @@ public class Settings extends SettingsActivity {
+     public static class DeviceSettings extends SettingsActivity { /* empty */ }
+     public static class PersonalSettings extends SettingsActivity { /* empty */ }
+     public static class SystemSettings extends SettingsActivity { /* empty */ }
+-    public static class MagiskActivity extends SettingsActivity { /* empty */ }
++    public static class SuperSUActivity extends SettingsActivity { /* empty */ }
+     public static class NavigationSettingsActivity extends SettingsActivity { /* empty */ }
+     public static class FlingSettingsActivity extends SettingsActivity { /* empty */ }
+     public static class PieControlSettingsActivity extends SettingsActivity { /* empty */ }
+diff --git a/src/com/android/settings/SettingsActivity.java b/src/com/android/settings/SettingsActivity.java
+index 6025f0f..2471cd4 100644
+--- a/src/com/android/settings/SettingsActivity.java
++++ b/src/com/android/settings/SettingsActivity.java
+@@ -252,7 +252,7 @@ public class SettingsActivity extends SettingsDrawerActivity
+ 
+     private static final String THEMES_FRAGMENT = "com.android.settings.Themes";
+ 
+-    private static final String MAGISK_FRAGMENT = "com.android.settings.MagiskManager";
++    private static final String SUPERSU_FRAGMENT = "com.android.settings.SuperSU";
+ 
+     private String mFragmentClass;
+     private String mActivityAction;
+@@ -1076,10 +1076,10 @@ public class SettingsActivity extends SettingsDrawerActivity
+      */
+     private Fragment switchToFragment(String fragmentName, Bundle args, boolean validate,
+             boolean addToBackStack, int titleResId, CharSequence title, boolean withTransition) {
+-         if (MAGISK_FRAGMENT.equals(fragmentName)) {
+-            Intent magiskIntent = new Intent();
+-            magiskIntent.setClassName("com.topjohnwu.magisk", "com.topjohnwu.magisk.SplashActivity");
+-            startActivity(magiskIntent);
++        if (SUPERSU_FRAGMENT.equals(fragmentName)) {
++            Intent superSUIntent = new Intent();
++            superSUIntent.setClassName("eu.chainfire.supersu", "eu.chainfire.supersu.MainActivity");
++            startActivity(superSUIntent);
+             finish();
+             return null;
+         }
+@@ -1212,15 +1212,15 @@ public class SettingsActivity extends SettingsDrawerActivity
+         // Reveal development-only quick settings tiles
+         DevelopmentTiles.setTilesEnabled(this, showDev);
+ 
+-        // Magisk Manager
+-        boolean magiskSupported = false;
++        // Embedding into Settings is supported from SuperSU v1.85 and up
++        boolean suSupported = false;
+         try {
+-            magiskSupported = (getPackageManager().getPackageInfo("com.topjohnwu.magisk", 0).versionCode > 0);
++            suSupported = (getPackageManager().getPackageInfo("eu.chainfire.supersu", 0).versionCode >= 185);
+         } catch (PackageManager.NameNotFoundException e) {
+         }
+         setTileEnabled(new ComponentName(packageName,
+-                        Settings.MagiskActivity.class.getName()),
+-                magiskSupported, isAdmin, pm);
++                        Settings.SuperSUActivity.class.getName()),
++                suSupported, isAdmin, pm);
+ 
+         // Show scheduled power on and off if support
+         boolean showTimerSwitch = false;
