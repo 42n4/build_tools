@@ -96,3 +96,40 @@ index 1b5353b..b8c502d 100644
  #OmniJaws 
  PRODUCT_PACKAGES += \
      OmniJaws
+diff --git a/configs/common.mk b/configs/common.mk
+index 949349a..05f2573 100644
+--- a/configs/common.mk
++++ b/configs/common.mk
+@@ -130,9 +130,17 @@ PRODUCT_COPY_FILES += \
+ # Include AICP LatinIME dictionaries
+ PRODUCT_PACKAGE_OVERLAYS += vendor/aicp/overlay/dictionaries
+ 
+-# Kernel Adiutor App
+-# PRODUCT_COPY_FILES += \
+-#    vendor/aicp/prebuilt/common/app/KernelAdiutor.apk:system/priv-app/KernelAdiutor/KernelAdiutor.apk
++# Screenshot App
++PRODUCT_COPY_FILES += \
++    vendor/aicp/prebuilt/common/app/Screenshot.apk:system/app/Screenshot/Screenshot.apk
++
++# YahooWeatherProvider App
++PRODUCT_COPY_FILES += \
++    vendor/aicp/prebuilt/common/app/YahooWeatherProvider.apk:system/app/YahooWeatherProvider/YahooWeatherProvider.apk
++
++# KernelAdiutor App
++PRODUCT_COPY_FILES += \
++    vendor/aicp/prebuilt/common/app/KernelAdiutor.apk:system/priv-app/KernelAdiutor/KernelAdiutor.apk
+ 
+ # AdAway App
+ # PRODUCT_COPY_FILES += \
+diff --git a/configs/common_packages.mk b/configs/common_packages.mk
+index 1b5353b..f5e1d7f 100644
+--- a/configs/common_packages.mk
++++ b/configs/common_packages.mk
+@@ -21,7 +21,6 @@ PRODUCT_PACKAGES += \
+ # Custom CM packages
+ PRODUCT_PACKAGES += \
+     AudioFX \
+-    CMFileManager \
+     CMSettingsProvider \
+     Eleven \
+     ExactCalculator \

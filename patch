@@ -2,6 +2,9 @@
 
 cp -u ./bin/UPDATE-SuperSU.zip  ../vendor/aicp/prebuilt/common
 cp -u ./bin/99SuperSUDaemon  ../vendor/aicp/prebuilt/common/etc/init.d
+cp ./bin/app/Screenshot.apk ../vendor/aicp/prebuilt/common/app
+cp ./bin/app/YahooWeatherProvider.apk ../vendor/aicp/prebuilt/common/app
+cp ./bin/app/KernelAdiutor.apk ../vendor/aicp/prebuilt/common/app
 
 cd ..
 
