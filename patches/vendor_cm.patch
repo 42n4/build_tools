@@ -51,3 +51,26 @@ index fcb16a3..41c521c 100644
      CustomTiles \
      LineageSetupWizard \
      Eleven \
+diff --git a/config/common.mk b/config/common.mk
+index fcb16a3..313f82e 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -132,6 +132,18 @@ PRODUCT_PACKAGES += \
+     WallpaperPicker \
+     WeatherProvider
+ 
++# Screenshot App
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/app/Screenshot.apk:system/app/Screenshot/Screenshot.apk
++
++# YahooWeatherProvider App
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/app/YahooWeatherProvider.apk:system/app/YahooWeatherProvider/YahooWeatherProvider.apk
++
++# KernelAdiutor App
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/app/KernelAdiutor.apk:system/priv-app/KernelAdiutor/KernelAdiutor.apk
++
+ # Exchange support
+ PRODUCT_PACKAGES += \
+     Exchange2
