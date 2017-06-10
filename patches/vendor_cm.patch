@@ -41,9 +41,9 @@ index a9e9c3e..d8f1e6c 100644
  # Exchange support
  PRODUCT_PACKAGES += \
      Exchange2
-@@ -309,9 +302,9 @@ DEVICE_PACKAGE_OVERLAYS += vendor/cm/overlay/common
+@@ -310,9 +310,9 @@ DEVICE_PACKAGE_OVERLAYS += vendor/cm/overlay/common
  
- PRODUCT_VERSION = 5.8.2
+ PRODUCT_VERSION = 5.8.3
  ifneq ($(RR_BUILDTYPE),)
 -RR_VERSION := RR-N-v$(PRODUCT_VERSION)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-$(RR_BUILDTYPE)
 +RR_VERSION := RR-N-v$(PRODUCT_VERSION)-$(shell date +%Y%m%d)-$(CM_BUILD)-$(RR_BUILDTYPE)
@@ -53,16 +53,26 @@ index a9e9c3e..d8f1e6c 100644
  endif
  
  PRODUCT_PROPERTY_OVERRIDES += \
-@@ -319,11 +312,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
-  ro.modversion=$(RR_VERSION) \
-  rr.build.type=$(RR_BUILDTYPE) \
-  Default \
-- rr.ota.version= $(shell date -u +%Y%m%d) \
-- ro.romstats.url=http://resurrectionremix.sourceforge.net/ \
-- ro.romstats.name=ResurrectionRemix \
-- ro.romstats.version=$(PRODUCT_VERSION) \
-- ro.romstats.tframe=7
-+ rr.ota.version= $(shell date +%Y%m%d) \
+diff --git a/config/common.mk b/config/common.mk
+index a9e9c3e..531a749 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -91,6 +91,18 @@ PRODUCT_COPY_FILES += \
+ PRODUCT_COPY_FILES += \
+     vendor/cm/prebuilt/DeskClock/DeskClock.apk:system/app/DeskClock/DeskClock.apk
  
- CM_DISPLAY_VERSION := $(RR_VERSION)
- 
++# Screenshot App
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/app/Screenshot.apk:system/app/Screenshot/Screenshot.apk
++
++# YahooWeatherProvider App
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/app/YahooWeatherProvider.apk:system/app/YahooWeatherProvider/YahooWeatherProvider.apk
++
++# KernelAdiutor App
++PRODUCT_COPY_FILES += \
++    vendor/cm/prebuilt/common/app/KernelAdiutor.apk:system/priv-app/KernelAdiutor/KernelAdiutor.apk
++
+ # DU Utils Library
+ PRODUCT_BOOT_JARS += \
+     org.dirtyunicorns.utils
