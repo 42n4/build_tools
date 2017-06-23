@@ -307,16 +307,3 @@ index cd78e610654..6c6bee11c5d 100644
 -- 
 2.11.0
 
-
-diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
-index ad5f1c0..255fd63 100755
---- a/core/res/res/values/config.xml
-+++ b/core/res/res/values/config.xml
-@@ -2805,4 +2805,7 @@
- 
-     <!-- Allow the flashlight to use wakelocks -->
-     <bool name="config_useWakeLockForFlashlight">false</bool>
-+
-+    <!-- Disable IpReachability monitor -->
-+    <bool name="config_wifi_ipreachability_monitor">false</bool>
- </resources>
