@@ -307,16 +307,3 @@ index cd78e610654..6c6bee11c5d 100644
 -- 
 2.11.0
 
-
-diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
-index 8f3ef6e..82f2c2d 100644
---- a/core/res/res/values/config.xml
-+++ b/core/res/res/values/config.xml
-@@ -2799,4 +2799,7 @@
- 
-     <!-- Whether to enable HumanInteractionController by default -->
-     <bool name="config_HICEnabledDefault">true</bool>
-+
-+    <!-- Disable IpReachability monitor -->
-+    <bool name="config_wifi_ipreachability_monitor">false</bool>
- </resources>
