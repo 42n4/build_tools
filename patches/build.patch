@@ -18,29 +18,26 @@ index 4906939..ba8ca36 100644
    def ShowProgress(self, frac, dur):
      """Update the progress bar, advancing it over 'frac' over the next
 diff --git a/tools/releasetools/ota_from_target_files.py b/tools/releasetools/ota_from_target_files.py
-index b4a6917..c07c78d 100755
+index 20a3531..40e1cd5 100755
 --- a/tools/releasetools/ota_from_target_files.py
 +++ b/tools/releasetools/ota_from_target_files.py
-@@ -824,14 +824,16 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
-   script.WriteRawImage("/boot", "boot.img")
- 
-   if block_based:
-+    script.Print("Flashing SuperSU...")
-+    common.ZipWriteStr(output_zip, "supersu/supersu.zip",
-+                   ""+input_zip.read("SYSTEM/addon.d/UPDATE-SuperSU.zip"))
-+    script.Mount("/system")
+@@ -865,12 +865,14 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
+   if os.getenv('WITH_ROOT_METHOD','rootless') == "magisk":
+     if block_based:
+       script.Print(" ")
+-      script.Print("Flashing Magisk...")
+-      script.Print(" ")
+-      common.ZipWriteStr(output_zip, "magisk/magisk.zip",
+-                     ""+input_zip.read("SYSTEM/addon.d/magisk.zip"))
+-      script.FlashMagisk()
++      script.Print("Flashing SuperSU...")
+       script.Print(" ")
++      common.ZipWriteStr(output_zip, "supersu/supersu.zip",
++                     ""+input_zip.read("SYSTEM/addon.d/UPDATE-SuperSU.zip"))
 +    script.FlashSuperSU()
-+  if block_based:
-+    script.Unmount("/system")
-     script.Print(" ")
--    script.Print("Flashing Magisk...")
--    script.Print(" ")
--    common.ZipWriteStr(output_zip, "magisk/magisk.zip",
--                   ""+input_zip.read("SYSTEM/addon.d/magisk.zip"))
--    script.FlashMagisk()
++    script.Print(" ")
 +    script.Print("SuperSU installed in systemless mode")
-     script.Print(" ")
--  script.ShowProgress(0.2, 10)
-   device_specific.FullOTA_InstallEnd()
++    script.Print(" ")
  
-   if OPTIONS.extra_script is not None:
+   script.ShowProgress(0.2, 10)
+   device_specific.FullOTA_InstallEnd()

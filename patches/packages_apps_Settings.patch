@@ -1,11 +1,11 @@
 diff --git a/AndroidManifest.xml b/AndroidManifest.xml
-index c04b5b3..965a2ae 100755
+index e5d0d03..a0821e3 100755
 --- a/AndroidManifest.xml
 +++ b/AndroidManifest.xml
-@@ -147,25 +147,22 @@
-             </intent-filter>
+@@ -2796,26 +2796,23 @@
+                 android:value="com.android.settings.ka" />
          </activity>
- 
+   
 -        <activity android:name="Settings$MagiskActivity"
 -            android:label="@string/magisk_title"
 -            android:icon="@drawable/ic_settings_magisk"
@@ -25,21 +25,22 @@ index c04b5b3..965a2ae 100755
 -                <action android:name="com.android.settings.action.SETTINGS" />
 -            </intent-filter>
 -            <meta-data android:name="com.android.settings.category"
--                android:value="com.android.settings.category.rr" />
--            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
--                android:value="com.android.settings.MagiskManager" />
--            <meta-data android:name="com.android.settings.summary"
--                android:resource="@string/magisk_summary" />
 +            <intent-filter android:priority="0">
 +                 <action android:name="com.android.settings.action.SETTINGS" />
 +             </intent-filter>
 +             <meta-data android:name="com.android.settings.category"
-+                android:value="com.android.settings.category.system" />
+                 android:value="com.android.settings.category.system" />
+-            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+-                android:value="com.android.settings.MagiskManager" />
+-            <meta-data android:name="com.android.settings.summary"
+-                android:resource="@string/magisk_summary" />
+-        </activity>    
 +             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
 +                android:value="com.android.settings.SuperSU" />
-         </activity>
++        </activity>
  
-         <activity android:name="Settings$ThemesActivity"
+        <activity android:name="com.android.settings.rr.recentshidden.HAFRAppListActivity" />
+ 
 diff --git a/res/drawable/ic_settings_supersu.xml b/res/drawable/ic_settings_supersu.xml
 new file mode 100644
 index 0000000..7716f9e
