@@ -66,14 +66,13 @@ index 0000000..7716f9e
 +-0.763869,3.759602 3.251778,0 0.776671,-3.759602 -3.26458,0 z" />
 +</vector>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index b875f5f..62007c0 100644
+index 7fd027a..b6a3216 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -7927,4 +7927,7 @@
-     <string name="menu_hidden_apps_reset_lock">Reset pattern lock</string>
+@@ -7956,4 +7956,6 @@
      <string name="protected_apps">Protected apps</string>
      <string name="saving_protected_components">Saving component state</string>
-+
+ 
 +    <!-- SuperSU header name - the app hides itself from launcher based on this resource name being present in com.android.settings -->
 +    <string name="supersu_title">SuperSU</string>
  </resources>

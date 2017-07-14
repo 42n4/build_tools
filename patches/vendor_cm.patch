@@ -40,7 +40,7 @@ index 24460098..d22099fa 100644
          else
              TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
 diff --git a/config/common.mk b/config/common.mk
-index fcb16a3..41c521c 100644
+index 2022b6c..8dba5f2 100644
 --- a/config/common.mk
 +++ b/config/common.mk
 @@ -121,7 +121,6 @@ PRODUCT_PACKAGES += \
@@ -48,9 +48,9 @@ index fcb16a3..41c521c 100644
      AudioFX \
      CMSettingsProvider \
 -    CMUpdater \
-     CustomTiles \
      LineageSetupWizard \
      Eleven \
+     ExactCalculator \
 diff --git a/config/common.mk b/config/common.mk
 index fcb16a3..313f82e 100644
 --- a/config/common.mk
