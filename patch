@@ -23,7 +23,6 @@ PATCHES=(
 'system/core			system_core.patch'
 'vendor/aicp			vendor_aicp.patch'
 'build 			build.patch'
-'packages/apps/Settings 	packages_apps_Settings.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]

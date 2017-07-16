@@ -1,42 +1,40 @@
 diff --git a/tools/releasetools/edify_generator.py b/tools/releasetools/edify_generator.py
-index b888258..94f44c5 100644
+index a1c50cd..94f44c5 100644
 --- a/tools/releasetools/edify_generator.py
 +++ b/tools/releasetools/edify_generator.py
-@@ -173,10 +173,10 @@ class EdifyGenerator(object):
+@@ -173,6 +173,11 @@ class EdifyGenerator(object):
    def RunPersist(self, command):
      self.script.append(('run_program("/tmp/install/bin/persist.sh", "%s");' % command))
  
--  def FlashMagisk(self):
--    self.script.append('package_extract_dir("magisk", "/tmp/magisk");')
--    self.script.append('run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");')
--    self.script.append('run_program("/sbin/sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");')
 +  def FlashSuperSU(self):
 +    self.script.append('package_extract_dir("supersu", "/tmp/supersu");')
 +    self.script.append('run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/*", "-d", "/tmp/supersu");')
 +    self.script.append('run_program("/sbin/busybox", "sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");')
- 
++
    def ShowProgress(self, frac, dur):
      """Update the progress bar, advancing it over 'frac' over the next
+     'dur' seconds.  'dur' may be zero to advance it via SetProgress
 diff --git a/tools/releasetools/ota_from_target_files.py b/tools/releasetools/ota_from_target_files.py
-index d138db2..2b83ac9 100755
+index 9c77cc2..1b71013 100755
 --- a/tools/releasetools/ota_from_target_files.py
 +++ b/tools/releasetools/ota_from_target_files.py
-@@ -803,13 +803,13 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
+@@ -837,6 +837,19 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
+   script.ShowProgress(0.2, 10)
+   device_specific.FullOTA_InstallEnd()
  
-   if block_based:
-     script.Print(" ")
--    script.Print("Flashing Magisk...")
++  if block_based:
++    script.Print(" ")
 +    script.Print("Flashing SuperSU...")
 +    common.ZipWriteStr(output_zip, "supersu/supersu.zip",
 +                   ""+input_zip.read("SYSTEM/addon.d/UPDATE-SuperSU.zip"))
++    script.Mount("/system")
 +    script.FlashSuperSU()
-     script.Print(" ")
--    common.ZipWriteStr(output_zip, "magisk/magisk.zip",
--                   ""+input_zip.read("SYSTEM/addon.d/magisk.zip"))
--    script.FlashMagisk()
++  if block_based:
++    script.Unmount("/system")
++    script.Print(" ")
 +    script.Print("SuperSU installed in systemless mode")
-     script.Print(" ")
--  script.ShowProgress(0.2, 10)
-   device_specific.FullOTA_InstallEnd()
- 
++    script.Print(" ")
++
    if OPTIONS.extra_script is not None:
+     script.AppendExtra(OPTIONS.extra_script)
+ 

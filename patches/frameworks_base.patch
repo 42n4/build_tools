@@ -193,32 +193,11 @@ index 934c6b23bff..5536e0e8802 100644
 2.11.0
 
 
-From 249922023d0f959c1d98a24b445faf10b1c5c764 Mon Sep 17 00:00:00 2001
-From: Pawit Pornkitprasan <p.pawit@gmail.com>
-Date: Sat, 14 Mar 2015 22:53:50 +0700
-Subject: [PATCH 4/5] PowerManagerService: only turn on button light when any
- button is pressed
-
-This more closely emulates stock Samsung behavior
-
-Change-Id: I6b15c45b713bcbc290a1026805c46109060f9990
----
- .../core/java/com/android/server/power/PowerManagerService.java   | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index 40a014f4ae1..655ccb4d793 100644
+index 365e58b..1f8d2d7 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
-@@ -272,6 +272,7 @@ public final class PowerManagerService extends SystemService
-     // Timestamp of the last call to user activity.
-     private long mLastUserActivityTime;
-     private long mLastUserActivityTimeNoChangeLights;
-+    private long mLastButtonActivityTime;
- 
-     // Timestamp of last interactive power hint.
-     private long mLastInteractivePowerHintTime;
-@@ -1291,6 +1292,11 @@ public final class PowerManagerService extends SystemService
+@@ -1314,6 +1314,11 @@ public final class PowerManagerService extends SystemService
                      return true;
                  }
              } else {
@@ -228,19 +207,8 @@ index 40a014f4ae1..655ccb4d793 100644
 +                }
 +
                  if (eventTime > mLastUserActivityTime) {
-                     mLastUserActivityTime = eventTime;
-                     mDirty |= DIRTY_USER_ACTIVITY;
-@@ -1851,7 +1857,7 @@ public final class PowerManagerService extends SystemService
-                             mKeyboardLight.setBrightness(mKeyboardVisible ?
-                                     keyboardBrightness : 0);
-                             if (mButtonTimeout != 0
--                                    && now > mLastUserActivityTime + mButtonTimeout) {
-+                                    && now > mLastButtonActivityTime + mButtonTimeout) {
-                                 mButtonsLight.setBrightness(0);
-                             } else {
-                                 if (!mProximityPositive) {
--- 
-2.11.0
+                     mButtonPressed = event == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
+                     if (mButtonLightOnKeypressOnly && mButtonPressed) {
 
 
 From 2466a1cc0c32b363f5c43e845557caa4021cc584 Mon Sep 17 00:00:00 2001
@@ -307,3 +275,177 @@ index cd78e610654..6c6bee11c5d 100644
 -- 
 2.11.0
 
+
+diff --git a/core/java/com/android/internal/util/aicp/AicpUtils.java b/core/java/com/android/internal/util/aicp/AicpUtils.java
+index ee8413f..1984016 100644
+--- a/core/java/com/android/internal/util/aicp/AicpUtils.java
++++ b/core/java/com/android/internal/util/aicp/AicpUtils.java
+@@ -172,23 +172,6 @@ public class AicpUtils {
+     public static Intent INTENT_LAUNCH_APP = new Intent(Intent.ACTION_MAIN)
+             .setClassName(APP_PACKAGE_NAME, APP_PACKAGE_NAME + ".SettingsActivity");
+ 
+-    public static boolean isBillingBypassInstalled(final Context context) {
+-        boolean mBillingBypassInstalled = false;
+-        final String[] billingBypassPackageNames = {
+-            "com.dimonvideo.luckypatcher", // used by Lucky Patcher
+-            "com.chelpus.lackypatch", // used by Lucky Patcher
+-            "com.android.vending.billing.InAppBillingService.LACK", // used by Lucky Patcher
+-            "com.android.vending.billing.InAppBillingService.LOCK", // used by Lucky Patcher
+-            "com.android.vendinc", // used by Uret
+-            "uret.jasi2169.patcher" // used by Uret
+-        };
+-        for (String billingBypassPackageName : billingBypassPackageNames) {
+-            mBillingBypassInstalled = mBillingBypassInstalled || isPackageInstalled(context, billingBypassPackageName);
+-        }
+-
+-        return mBillingBypassInstalled;
+-    }
+-
+     /**
+      * @hide
+      */
+diff --git a/core/res/res/values-de/aicp_strings.xml b/core/res/res/values-de/aicp_strings.xml
+index 87be4c5..55f8b92 100644
+--- a/core/res/res/values-de/aicp_strings.xml
++++ b/core/res/res/values-de/aicp_strings.xml
+@@ -37,11 +37,6 @@
+     <!-- label for item that takes On-The-Go in the phone options dialog -->
+     <string name="global_action_onthego">\"On-The-Go\"-Modus</string>
+ 
+-    <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
+-    <string name="billing_bypass_installed_title">App Patcher gefunden!</string>
+-    <string name="billing_bypass_installed_message">Hiermit gestehe ich eine App zur Umgehung des Kaufs von Apps, wie Lucky Patcher oder Uret zu benutzen. Mir ist bewusst das dies, bei Nutzung, den App-Entwicklern aktiv schadet.</string>
+-    <string name="billing_bypass_acknowledge">Ich verstehe.</string>
+-
+     <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+     <string name="reboot_systemui">SystemUI neu starten</string>
+ 
+diff --git a/core/res/res/values-ru/aicp_strings.xml b/core/res/res/values-ru/aicp_strings.xml
+index 896e3d8..f5f800b 100644
+--- a/core/res/res/values-ru/aicp_strings.xml
++++ b/core/res/res/values-ru/aicp_strings.xml
+@@ -37,11 +37,6 @@
+     <!-- label for item that takes On-The-Go in the phone options dialog -->
+     <string name="global_action_onthego">Режим \"На ходу\"</string>
+ 
+-    <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
+-    <string name="billing_bypass_installed_title">Найден Lucky Patcher/Uret!</string>
+-    <string name="billing_bypass_installed_message">Я признаю то, что я вор и пират. Я люблю воровать труд и деньги разработчиков и хвастаюсь этим.</string>
+-    <string name="billing_bypass_acknowledge">Я признаю это</string>
+-
+     <!-- Restart SystemUI -->
+     <string name="reboot_systemui">Перезапустить пользовательский интерфейс</string>
+ </resources>
+diff --git a/core/res/res/values/aicp_strings.xml b/core/res/res/values/aicp_strings.xml
+index f1b8fdf..f1212fe 100644
+--- a/core/res/res/values/aicp_strings.xml
++++ b/core/res/res/values/aicp_strings.xml
+@@ -37,9 +37,4 @@
+     <!-- label for item that takes On-The-Go in the phone options dialog -->
+     <string name="global_action_onthego">On-The-Go Mode</string>
+ 
+-    <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
+-    <string name="billing_bypass_installed_title">Billing Patcher found!</string>
+-    <string name="billing_bypass_installed_message">I hereby acknowledge that this system is running an app billing bypass patcher like Lucky Patcher or Uret. I actively harm the developers of apps by using said software.</string>
+-    <string name="billing_bypass_acknowledge">I acknowledge.</string>
+-
+ </resources>
+diff --git a/core/res/res/values/aicp_symbols.xml b/core/res/res/values/aicp_symbols.xml
+index e2d95af..115e44c 100644
+--- a/core/res/res/values/aicp_symbols.xml
++++ b/core/res/res/values/aicp_symbols.xml
+@@ -112,11 +112,6 @@
+   <java-symbol type="string" name="global_action_onthego" />
+   <java-symbol type="drawable" name="ic_lock_onthego" />
+ 
+-  <!-- Billing bypass (eg. Lucky Patcher, Uret) warning dialog -->
+-  <java-symbol type="string" name="billing_bypass_installed_title" />
+-  <java-symbol type="string" name="billing_bypass_installed_message" />
+-  <java-symbol type="string" name="billing_bypass_acknowledge" />
+-
+   <!-- OmniJaws Weather drawable -->
+   <java-symbol type="drawable" name="ic_qs_weather_default_on" />
+ 
+diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
+index 6d94070..5bc2661 100644
+--- a/services/core/java/com/android/server/am/ActivityManagerService.java
++++ b/services/core/java/com/android/server/am/ActivityManagerService.java
+@@ -36,7 +36,6 @@ import com.android.internal.os.ProcessCpuTracker;
+ import com.android.internal.os.TransferPipe;
+ import com.android.internal.os.Zygote;
+ import com.android.internal.os.InstallerConnection.InstallerException;
+-import com.android.internal.util.aicp.AicpUtils;
+ import com.android.internal.util.ArrayUtils;
+ import com.android.internal.util.FastPrintWriter;
+ import com.android.internal.util.FastXmlSerializer;
+@@ -150,10 +149,8 @@ import android.content.res.Configuration;
+ import android.content.res.Resources;
+ import android.database.ContentObserver;
+ import android.graphics.Bitmap;
+-import android.graphics.Color;
+ import android.graphics.Point;
+ import android.graphics.Rect;
+-import android.graphics.drawable.GradientDrawable;
+ import android.location.LocationManager;
+ import android.net.Proxy;
+ import android.net.ProxyInfo;
+@@ -225,7 +222,6 @@ import android.view.Gravity;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.WindowManager;
+-import android.widget.Button;
+ 
+ import java.io.File;
+ import java.io.FileDescriptor;
+@@ -1570,7 +1566,6 @@ public final class ActivityManagerService extends ActivityManagerNative
+     static final int NOTIFY_ACTIVITY_DISMISSING_DOCKED_STACK_MSG = 68;
+     static final int VR_MODE_APPLY_IF_NEEDED_MSG = 69;
+     static final int SHOW_UNSUPPORTED_DISPLAY_SIZE_DIALOG_MSG = 70;
+-    static final int SHOW_BILLINGBYPASS_UI_MSG = 71;
+ 
+     static final int NOTIFY_VR_SLEEPING_MSG = 72;
+ 
+@@ -1819,31 +1814,6 @@ public final class ActivityManagerService extends ActivityManagerNative
+             case DISPATCH_UIDS_CHANGED_UI_MSG: {
+                 dispatchUidsChanged();
+             } break;
+-            case SHOW_BILLINGBYPASS_UI_MSG: {
+-                if (mShowDialogs) {
+-                    final GradientDrawable carntDialogGd = new GradientDrawable();
+-                    carntDialogGd.setColor(0XCFFFFF00);
+-                    carntDialogGd.setCornerRadius(12);
+-
+-                    AlertDialog d = new BaseErrorDialog(mContext);
+-                    d.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
+-                    d.setCancelable(false);
+-                    d.setTitle(mContext.getText(R.string.billing_bypass_installed_title));
+-                    d.setMessage(mContext.getString(R.string.billing_bypass_installed_message));
+-                    d.setButton(DialogInterface.BUTTON_POSITIVE, mContext.getText(R.string.billing_bypass_acknowledge),
+-                            obtainMessage(DISMISS_DIALOG_UI_MSG, d));
+-                    d.getWindow().setDimAmount(1.0f);
+-                    d.show();
+-
+-                    Button admitButton = d.getButton(DialogInterface.BUTTON_POSITIVE);
+-                    admitButton.setTextColor(Color.WHITE);
+-
+-                    View dialogView = d.getWindow().getDecorView();
+-                    if (dialogView != null) {
+-                        dialogView.setBackground(carntDialogGd);
+-                    }
+-                }
+-            } break;
+             }
+         }
+     }
+@@ -13709,11 +13679,6 @@ public final class ActivityManagerService extends ActivityManagerNative
+                 mUiHandler.obtainMessage(SHOW_FINGERPRINT_ERROR_UI_MSG).sendToTarget();
+             }
+ 
+-            if (AicpUtils.isBillingBypassInstalled(mContext)) {
+-                Slog.e(TAG, "Billing bypass app (eg. Lucky Patcher, Uret) is installed, so annoy the user");
+-                mUiHandler.obtainMessage(SHOW_BILLINGBYPASS_UI_MSG).sendToTarget();
+-            }
+-
+             long ident = Binder.clearCallingIdentity();
+             try {
+                 Intent intent = new Intent(Intent.ACTION_USER_STARTED);

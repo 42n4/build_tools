@@ -294,8 +294,8 @@ index cb6fc2f61..39c3b9f9a 100644
 +#include <GLES/gl.h>
 +#endif
  
- #include <cutils/iosched_policy.h>
  #include <cutils/log.h>
+ #include <cutils/properties.h>
 @@ -3182,12 +3185,18 @@ status_t SurfaceFlinger::onTransact(
              break;
          }
