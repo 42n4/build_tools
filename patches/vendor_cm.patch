@@ -40,22 +40,17 @@ index 24460098..d22099fa 100644
          else
              TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
 diff --git a/config/common.mk b/config/common.mk
-index 2022b6c..8dba5f2 100644
+index 2d27a50..86547b9 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -121,7 +121,6 @@ PRODUCT_PACKAGES += \
- PRODUCT_PACKAGES += \
-     AudioFX \
-     CMSettingsProvider \
--    CMUpdater \
+@@ -122,13 +122,23 @@ PRODUCT_PACKAGES += \
      LineageSetupWizard \
      Eleven \
      ExactCalculator \
-diff --git a/config/common.mk b/config/common.mk
-index fcb16a3..313f82e 100644
---- a/config/common.mk
-+++ b/config/common.mk
-@@ -132,6 +132,18 @@ PRODUCT_PACKAGES += \
+-    Jelly \
+     LockClock \
+     Trebuchet \
+-    Updater \
      WallpaperPicker \
      WeatherProvider
  
@@ -131,19 +126,6 @@ index 0000000..e078577
 +
 +include $(BUILD_HTTP_PREBUILT)
 +endif
-diff --git a/config/common.mk b/config/common.mk
-index 2022b6c..1752b4c 100644
---- a/config/common.mk
-+++ b/config/common.mk
-@@ -125,7 +125,6 @@ PRODUCT_PACKAGES += \
-     LineageSetupWizard \
-     Eleven \
-     ExactCalculator \
--    Jelly \
-     LiveLockScreenService \
-     LockClock \
-     Trebuchet \
-diff --git a/gello/Android.mk b/gello/Android.mk
 index e078577..a88c42a 100644
 --- a/gello/Android.mk
 +++ b/gello/Android.mk

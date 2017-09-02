@@ -194,10 +194,10 @@ index 934c6b23bff..5536e0e8802 100644
 
 
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index 3af7e04..a30fc12 100644
+index 55d0809..09d248e 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
-@@ -1313,6 +1313,11 @@ public final class PowerManagerService extends SystemService
+@@ -1314,6 +1314,11 @@ public final class PowerManagerService extends SystemService
                      return true;
                  }
              } else {
@@ -208,7 +208,7 @@ index 3af7e04..a30fc12 100644
 +
                  if (eventTime > mLastUserActivityTime) {
                      mButtonPressed = event == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
-                     if (mButtonLightOnKeypressOnly && mButtonPressed) {
+                     if (eventTime == mLastWakeTime ||
 
 
 From 2466a1cc0c32b363f5c43e845557caa4021cc584 Mon Sep 17 00:00:00 2001
