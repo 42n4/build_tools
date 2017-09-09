@@ -65,34 +65,31 @@ index 0000000..03e393e 100644
 +# Inherit device configuration
 +$(call inherit-product, device/samsung/i9152/aicp_9152.mk)
 diff --git a/configs/common.mk b/configs/common.mk
-index 949349a..c697848 100644
+index be5084a..c1095a1 100644
 --- a/configs/common.mk
 +++ b/configs/common.mk
-@@ -119,9 +119,10 @@ ifneq ($(TARGET_DISABLE_CMSDK), true)
- include vendor/aicp/configs/cmsdk_common.mk
+@@ -124,9 +124,10 @@ ifeq ($(WITH_TWRP),true)
+ include vendor/aicp/configs/twrp.mk
  endif
  
 -# Copy Magisk zip
-+# SuperSU
 -#PRODUCT_COPY_FILES += \
-+PRODUCT_COPY_FILES += \
 -#    vendor/aicp/prebuilt/common/magisk.zip:system/addon.d/magisk.zip
++# SuperSU
++PRODUCT_COPY_FILES += \
 +    vendor/aicp/prebuilt/common/UPDATE-SuperSU.zip:system/addon.d/UPDATE-SuperSU.zip \
 +    vendor/aicp/prebuilt/common/etc/init.d/99SuperSUDaemon:system/etc/init.d/99SuperSUDaemon
  
- # Copy latinime for gesture typing
- #PRODUCT_COPY_FILES += \
+ # Include AICP LatinIME dictionaries
+ PRODUCT_PACKAGE_OVERLAYS += vendor/aicp/overlay/dictionaries
 diff --git a/configs/common.mk b/configs/common.mk
-index 949349a..05f2573 100644
+index be5084a..d3f7365 100644
 --- a/configs/common.mk
 +++ b/configs/common.mk
-@@ -130,9 +130,17 @@ PRODUCT_COPY_FILES += \
+@@ -131,6 +131,18 @@ endif
  # Include AICP LatinIME dictionaries
  PRODUCT_PACKAGE_OVERLAYS += vendor/aicp/overlay/dictionaries
  
--# Kernel Adiutor App
--# PRODUCT_COPY_FILES += \
--#    vendor/aicp/prebuilt/common/app/KernelAdiutor.apk:system/priv-app/KernelAdiutor/KernelAdiutor.apk
 +# Screenshot App
 +PRODUCT_COPY_FILES += \
 +    vendor/aicp/prebuilt/common/app/Screenshot.apk:system/app/Screenshot/Screenshot.apk
@@ -104,11 +101,12 @@ index 949349a..05f2573 100644
 +# KernelAdiutor App
 +PRODUCT_COPY_FILES += \
 +    vendor/aicp/prebuilt/common/app/KernelAdiutor.apk:system/priv-app/KernelAdiutor/KernelAdiutor.apk
- 
- # AdAway App
- # PRODUCT_COPY_FILES += \
++
+ # AICP memo App
+ PRODUCT_COPY_FILES += \
+     vendor/aicp/prebuilt/common/app/AICP-memo.apk:system/priv-app/AICP-memo/AICP-memo.apk
 diff --git a/configs/common_packages.mk b/configs/common_packages.mk
-index 2d796e3..6dd31f7 100644
+index 53fc2b5..226e98b 100644
 --- a/configs/common_packages.mk
 +++ b/configs/common_packages.mk
 @@ -21,10 +21,8 @@ PRODUCT_PACKAGES += \
@@ -120,8 +118,8 @@ index 2d796e3..6dd31f7 100644
      Eleven \
 -    Jelly \
      ExactCalculator \
-     LiveLockScreenService \
      LockClock \
+     Trebuchet \
 diff --git a/gello/Android.mk b/gello/Android.mk
 new file mode 100644
 index 0000000..e078577

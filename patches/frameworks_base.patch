@@ -194,10 +194,10 @@ index 934c6b23bff..5536e0e8802 100644
 
 
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index 365e58b..1f8d2d7 100644
+index 6aea8a2..1dbceb5 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
-@@ -1314,6 +1314,11 @@ public final class PowerManagerService extends SystemService
+@@ -1333,6 +1333,11 @@ public final class PowerManagerService extends SystemService
                      return true;
                  }
              } else {
@@ -208,7 +208,7 @@ index 365e58b..1f8d2d7 100644
 +
                  if (eventTime > mLastUserActivityTime) {
                      mButtonPressed = event == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
-                     if (mButtonLightOnKeypressOnly && mButtonPressed) {
+                     if (eventTime == mLastWakeTime ||
 
 
 From 2466a1cc0c32b363f5c43e845557caa4021cc584 Mon Sep 17 00:00:00 2001
@@ -277,10 +277,10 @@ index cd78e610654..6c6bee11c5d 100644
 
 
 diff --git a/core/java/com/android/internal/util/aicp/AicpUtils.java b/core/java/com/android/internal/util/aicp/AicpUtils.java
-index ee8413f..1984016 100644
+index c45bf30..6ce37f7 100644
 --- a/core/java/com/android/internal/util/aicp/AicpUtils.java
 +++ b/core/java/com/android/internal/util/aicp/AicpUtils.java
-@@ -172,23 +172,6 @@ public class AicpUtils {
+@@ -177,24 +177,6 @@ public class AicpUtils {
      public static Intent INTENT_LAUNCH_APP = new Intent(Intent.ACTION_MAIN)
              .setClassName(APP_PACKAGE_NAME, APP_PACKAGE_NAME + ".SettingsActivity");
  
@@ -291,6 +291,7 @@ index ee8413f..1984016 100644
 -            "com.chelpus.lackypatch", // used by Lucky Patcher
 -            "com.android.vending.billing.InAppBillingService.LACK", // used by Lucky Patcher
 -            "com.android.vending.billing.InAppBillingService.LOCK", // used by Lucky Patcher
+-            "com.android.vending.billing.InAppBillingService.CLON", // used by Lucky Patcher
 -            "com.android.vendinc", // used by Uret
 -            "uret.jasi2169.patcher" // used by Uret
 -        };
@@ -337,10 +338,10 @@ index 896e3d8..f5f800b 100644
      <string name="reboot_systemui">Перезапустить пользовательский интерфейс</string>
  </resources>
 diff --git a/core/res/res/values/aicp_strings.xml b/core/res/res/values/aicp_strings.xml
-index f1b8fdf..f1212fe 100644
+index 149f8f9..667b3ee 100644
 --- a/core/res/res/values/aicp_strings.xml
 +++ b/core/res/res/values/aicp_strings.xml
-@@ -37,9 +37,4 @@
+@@ -37,11 +37,6 @@
      <!-- label for item that takes On-The-Go in the phone options dialog -->
      <string name="global_action_onthego">On-The-Go Mode</string>
  
@@ -349,7 +350,9 @@ index f1b8fdf..f1212fe 100644
 -    <string name="billing_bypass_installed_message">I hereby acknowledge that this system is running an app billing bypass patcher like Lucky Patcher or Uret. I actively harm the developers of apps by using said software.</string>
 -    <string name="billing_bypass_acknowledge">I acknowledge.</string>
 -
- </resources>
+     <!-- Pocket Lock -->
+     <string name="pocket_lock_message_long_press">Long press power button to interact</string>
+ 
 diff --git a/core/res/res/values/aicp_symbols.xml b/core/res/res/values/aicp_symbols.xml
 index e2d95af..115e44c 100644
 --- a/core/res/res/values/aicp_symbols.xml
