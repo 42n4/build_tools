@@ -15,14 +15,15 @@ index acfa02a..317185a 100644
      """Update the progress bar, advancing it over 'frac' over the next
      'dur' seconds.  'dur' may be zero to advance it via SetProgress
 diff --git a/tools/releasetools/ota_from_target_files.py b/tools/releasetools/ota_from_target_files.py
-index 28fba6a..8a49179 100755
+index 4c54cec..28beb48 100755
 --- a/tools/releasetools/ota_from_target_files.py
 +++ b/tools/releasetools/ota_from_target_files.py
-@@ -766,6 +766,15 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
+@@ -795,6 +795,19 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
    script.ShowProgress(0.2, 10)
    device_specific.FullOTA_InstallEnd()
  
 +  if block_based:
++    script.Print(" ")
 +    script.Print("Flashing SuperSU...")
 +    common.ZipWriteStr(output_zip, "supersu/supersu.zip",
 +                   ""+input_zip.read("SYSTEM/addon.d/UPDATE-SuperSU.zip"))
@@ -30,6 +31,9 @@ index 28fba6a..8a49179 100755
 +    script.FlashSuperSU()
 +  if block_based:
 +    script.Unmount("/system")
++    script.Print(" ")
++    script.Print("SuperSU installed in systemless mode")
++    script.Print(" ")
 +
    if OPTIONS.extra_script is not None:
      script.AppendExtra(OPTIONS.extra_script)
