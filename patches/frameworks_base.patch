@@ -306,37 +306,35 @@ index c45bf30..6ce37f7 100644
       * @hide
       */
 diff --git a/core/res/res/values-de/aicp_strings.xml b/core/res/res/values-de/aicp_strings.xml
-index 87be4c5..55f8b92 100644
+index 77948f7..8662bba 100644
 --- a/core/res/res/values-de/aicp_strings.xml
 +++ b/core/res/res/values-de/aicp_strings.xml
-@@ -37,11 +37,6 @@
-     <!-- label for item that takes On-The-Go in the phone options dialog -->
-     <string name="global_action_onthego">\"On-The-Go\"-Modus</string>
- 
--    <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
--    <string name="billing_bypass_installed_title">App Patcher gefunden!</string>
--    <string name="billing_bypass_installed_message">Hiermit gestehe ich eine App zur Umgehung des Kaufs von Apps, wie Lucky Patcher oder Uret zu benutzen. Mir ist bewusst das dies, bei Nutzung, den App-Entwicklern aktiv schadet.</string>
--    <string name="billing_bypass_acknowledge">Ich verstehe.</string>
--
-     <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-     <string name="reboot_systemui">SystemUI neu starten</string>
- 
+@@ -32,10 +32,6 @@
+   <string name="global_action_torch">Taschenlampe</string>
+   <!-- label for item that takes On-The-Go in the phone options dialog -->
+   <string name="global_action_onthego">\"On-The-Go\"-Modus</string>
+-  <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
+-  <string name="billing_bypass_installed_title">App Patcher gefunden!</string>
+-  <string name="billing_bypass_installed_message">Hiermit gestehe ich eine App zur Umgehung des Kaufs von Apps, wie Lucky Patcher oder Uret zu benutzen. Mir ist bewusst das dies, bei Nutzung, den App-Entwicklern aktiv schadet.</string>
+-  <string name="billing_bypass_acknowledge">Ich verstehe.</string>
+   <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">Ein-/Aus-Taste lange drücken, um mit dem Gerät zu interagieren</string>
+   <!-- Defines the sysfs attribute path used by pocket bridge
 diff --git a/core/res/res/values-ru/aicp_strings.xml b/core/res/res/values-ru/aicp_strings.xml
-index 896e3d8..f5f800b 100644
+index 3cad17b..4ed77c9 100644
 --- a/core/res/res/values-ru/aicp_strings.xml
 +++ b/core/res/res/values-ru/aicp_strings.xml
-@@ -37,11 +37,6 @@
-     <!-- label for item that takes On-The-Go in the phone options dialog -->
-     <string name="global_action_onthego">Режим \"На ходу\"</string>
- 
--    <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
--    <string name="billing_bypass_installed_title">Найден Lucky Patcher/Uret!</string>
--    <string name="billing_bypass_installed_message">Я признаю то, что я вор и пират. Я люблю воровать труд и деньги разработчиков и хвастаюсь этим.</string>
--    <string name="billing_bypass_acknowledge">Я признаю это</string>
--
-     <!-- Restart SystemUI -->
-     <string name="reboot_systemui">Перезапустить пользовательский интерфейс</string>
- </resources>
+@@ -32,10 +32,6 @@
+   <string name="global_action_torch">Фонарик</string>
+   <!-- label for item that takes On-The-Go in the phone options dialog -->
+   <string name="global_action_onthego">Режим \"На ходу\"</string>
+-  <!-- Billing bypass (eg. Lucky Patcher, Uret) dialog -->
+-  <string name="billing_bypass_installed_title">Найден Lucky Patcher/Uret!</string>
+-  <string name="billing_bypass_installed_message">Я признаю то, что я вор и пират. Я люблю воровать труд и деньги разработчиков и хвастаюсь этим.</string>
+-  <string name="billing_bypass_acknowledge">Я признаю это.</string>
+   <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">Нажмите и удерживайте кнопку питания для взаимодействия</string>
+   <!-- Defines the sysfs attribute path used by pocket bridge
 diff --git a/core/res/res/values/aicp_strings.xml b/core/res/res/values/aicp_strings.xml
 index 149f8f9..667b3ee 100644
 --- a/core/res/res/values/aicp_strings.xml
