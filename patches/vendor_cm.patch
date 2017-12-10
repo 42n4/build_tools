@@ -49,12 +49,12 @@ index 73ee74e..62f9cf3 100644
  
  PRODUCT_PROPERTY_OVERRIDES += \
 diff --git a/config/common.mk b/config/common.mk
-index a9e9c3e..531a749 100644
+index bc3d68b..c5c182e 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -91,6 +91,18 @@ PRODUCT_COPY_FILES += \
- PRODUCT_COPY_FILES += \
-     vendor/cm/prebuilt/DeskClock/DeskClock.apk:system/app/DeskClock/DeskClock.apk
+@@ -85,6 +85,18 @@ PRODUCT_PACKAGES += \
+     NexusLauncher \
+     Wallpaper
  
 +# Screenshot App
 +PRODUCT_COPY_FILES += \
