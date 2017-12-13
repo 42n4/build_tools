@@ -1,11 +1,12 @@
 #!/bin/bash
 
-cp -u ./bin/UPDATE-SuperSU.zip  ../vendor/cm/prebuilt/common
-cp -u ./bin/99SuperSUDaemon  ../vendor/cm/prebuilt/common/etc/init.d
+cp -u ./bin/UPDATE-SuperSU.zip ../vendor/cm/prebuilt/common
+cp -u ./bin/99SuperSUDaemon ../vendor/cm/prebuilt/common/etc/init.d
 mkdir ../vendor/cm/prebuilt/common/app
 cp -u ./bin/app/Screenshot.apk ../vendor/cm/prebuilt/common/app
 cp -u ./bin/app/YahooWeatherProvider.apk ../vendor/cm/prebuilt/common/app
 cp -u ./bin/app/KernelAdiutor.apk ../vendor/cm/prebuilt/common/app
+cp -u ./bin/app/SELinuxModeChanger.apk ../vendor/cm/prebuilt/common/app
 
 cd ..
 
