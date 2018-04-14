@@ -76,7 +76,7 @@ index 3212571..189e043 100644
 +
 +# SELinuxModeChanger App
 +PRODUCT_COPY_FILES += \
-+    vendor/cm/prebuilt/common/app/Screenshot.apk:system/app/SELinuxModeChanger/SELinuxModeChanger.apk
++    vendor/cm/prebuilt/common/app/SELinuxModeChanger.apk:system/priv-app/SELinuxModeChanger/SELinuxModeChanger.apk
 +
  # Exchange support
  PRODUCT_PACKAGES += \
